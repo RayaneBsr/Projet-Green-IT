@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BiblioLibre{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="{{ url_for('index') }}" class="nav-brand">BiblioLibre</a>
+    <div class="nav-links">
+      <a href="{{ url_for('ressources.liste') }}"
+         {% if request.endpoint and 'ressources' in request.endpoint %}class="on"{% endif %}>
+        Ressources
+      </a>
+      {% if current_user_id %}
+      <a href="{{ url_for('ressources.creer') }}"
+         {% if request.endpoint == 'ressources.creer' %}class="on"{% endif %}>
+        Déposer
+      </a>
+      {% endif %}
+      {% if current_user_role == 'admin' %}
+      <a href="{{ url_for('admin.utilisateurs') }}"
+         {% if request.endpoint and 'admin' in request.endpoint %}class="on"{% endif %}>
+        Admin
+      </a>
+      {% endif %}
+    </div>
+    <div class="nav-right">
+      {% if current_user_id %}
+        <span class="nav-user">{{ current_user_nom }}</span>
+        <a href="{{ url_for('profil.profil') }}" class="btn btn-sm">Profil</a>
+        <a href="{{ url_for('auth.deconnexion') }}" class="btn btn-sm">Déconnexion</a>
+      {% else %}
+        <a href="{{ url_for('auth.connexion') }}" class="btn btn-sm">Connexion</a>
+        <a href="{{ url_for('auth.inscription') }}" class="btn btn-p btn-sm">S'inscrire</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="margin-top:.8rem">
+          {% for cat, msg in messages %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-links">
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+      <a href="#">Licence</a>
+    </div>
+    <span>Pages &lt; 200 Ko · Aucun tracker · Données minimales · BiblioLibre 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
