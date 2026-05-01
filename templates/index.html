@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}BiblioLibre — Ressources pédagogiques étudiantes{% endblock %}
+
+{% block content %}
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Bibliothèque de ressources étudiantes</h1>
+    <p>Fiches de révision, résumés de cours, annales — déposés et partagés par les étudiants, pour les étudiants.</p>
+    <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+      <a href="{{ url_for('ressources.liste') }}" class="btn btn-p">Parcourir les ressources</a>
+      {% if not current_user_id %}
+      <a href="{{ url_for('auth.inscription') }}" class="btn">Contribuer</a>
+      {% else %}
+      <a href="{{ url_for('ressources.creer') }}" class="btn">Déposer une ressource</a>
+      {% endif %}
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-n">{{ stats.nb_ressources }}</div>
+        <div class="stat-l">ressources</div>
+      </div>
+      <div>
+        <div class="stat-n">{{ stats.nb_contributeurs }}</div>
+        <div class="stat-l">contributeurs</div>
+      </div>
+      <div>
+        <div class="stat-n">{{ stats.nb_matieres }}</div>
+        <div class="stat-l">matières</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="green-notice">
+    <strong>🌿 Engagements Green IT</strong>
+    <span class="gn-item">Pages &lt; 200 Ko</span>
+    <span class="gn-item">Zéro animation</span>
+    <span class="gn-item">Zéro autoplay</span>
+    <span class="gn-item">Filtres sans JS</span>
+    <span class="gn-item">Police système</span>
+    <span class="gn-item">Données minimales</span>
+    <span class="gn-item">Aucun tracker</span>
+  </div>
+
+  <div class="sh">
+    <h2>Ressources récentes</h2>
+    <a href="{{ url_for('ressources.liste') }}" style="font-size:.85rem">Voir tout →</a>
+  </div>
+
+  {% if recentes %}
+  <div class="r-list">
+    {% for r in recentes %}
+    <div class="r-item">
+      <div class="r-title">{{ r.titre }}</div>
+      {% if r.description %}<div class="r-desc">{{ r.description }}</div>{% endif %}
+      <div class="r-meta">
+        {% if r.matiere_nom %}<span class="tag tag-g">{{ r.matiere_nom }}</span>{% endif %}
+        {% if r.promotion %}<span class="tag">{{ r.promotion }}</span>{% endif %}
+        <span>{{ r.auteur }}</span>
+        <span>{{ r.date_ajout }}</span>
+        <a href="{{ r.lien_url }}" target="_blank" rel="noopener" class="btn btn-sm" style="margin-left:auto">Voir ↗</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">
+    Aucune ressource pour l'instant.
+    <a href="{{ url_for('auth.inscription') }}">Soyez le premier à contribuer.</a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
