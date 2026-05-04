@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Modifier l'utilisateur — BiblioLibre{% endblock %}
+{% block content %}
+<div class="wrap-sm" style="padding-top:.5rem">
+  <div class="ph">
+    <h1>Modifier l'utilisateur</h1>
+    <p><a href="{{ url_for('admin.utilisateurs') }}">← Retour à la liste</a></p>
+  </div>
+
+  <div class="box">
+    <div class="box-head">
+      <strong>{{ u.prenom }} {{ u.nom }}</strong>
+      <span style="color:var(--muted);font-size:.82rem"> — {{ u.email }}</span>
+    </div>
+    <div class="box-body">
+      <form method="POST">
+        <div class="field-row">
+          <div class="field">
+            <label for="prenom">Prénom <span class="required">*</span></label>
+            <input type="text" id="prenom" name="prenom" required value="{{ u.prenom }}">
+          </div>
+          <div class="field">
+            <label for="nom">Nom <span class="required">*</span></label>
+            <input type="text" id="nom" name="nom" required value="{{ u.nom }}">
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" required value="{{ u.email }}">
+        </div>
+        <div class="field">
+          <label for="role">Rôle</label>
+          <select id="role" name="role">
+            <option value="user"  {% if u.role == 'user'  %}selected{% endif %}>Étudiant</option>
+            <option value="admin" {% if u.role == 'admin' %}selected{% endif %}>Administrateur</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mdp">Nouveau mot de passe</label>
+          <input type="password" id="mdp" name="mdp" minlength="8"
+                 placeholder="Laisser vide pour ne pas changer">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-p">Enregistrer</button>
+          <a href="{{ url_for('admin.utilisateurs') }}" class="btn">Annuler</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
