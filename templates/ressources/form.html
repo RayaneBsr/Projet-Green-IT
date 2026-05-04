@@ -1,0 +1,67 @@
+
+{% extends "base.html" %}
+{% block title %}{{ action }} une ressource — BiblioLibre{% endblock %}
+{% block content %}
+<div class="wrap-sm" style="padding-top:.5rem">
+  <div class="ph">
+    <h1>{{ action }} une ressource</h1>
+    <p>
+      {% if action == 'Modifier' %}Modifiez les informations de la ressource.
+      {% else %}Partagez un lien utile avec la communauté.{% endif %}
+    </p>
+  </div>
+
+  <div class="box">
+    <div class="box-body">
+      <form method="POST">
+        <div class="field">
+          <label for="titre">Titre <span class="required">*</span></label>
+          <input type="text" id="titre" name="titre" required
+                 value="{{ ressource.titre if ressource else '' }}"
+                 placeholder="Ex : Résumé Fourier & Laplace">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="matiere_id">Matière</label>
+            <select id="matiere_id" name="matiere_id">
+              <option value="">— choisir —</option>
+              {% for m in matieres %}
+              <option value="{{ m.id }}"
+                {% if ressource and ressource.matiere_id == m.id %}selected{% endif %}>
+                {{ m.nom }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="promotion">Promotion</label>
+            <select id="promotion" name="promotion">
+              <option value="">— choisir —</option>
+              {% for p in promotions %}
+              <option value="{{ p }}"
+                {% if ressource and ressource.promotion == p %}selected{% endif %}>{{ p }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="lien_url">Lien URL <span class="required">*</span></label>
+          <input type="url" id="lien_url" name="lien_url" required
+                 value="{{ ressource.lien_url if ressource else '' }}"
+                 placeholder="https://…">
+          <div class="hint">Google Doc, Drive, Notion, PDF en ligne… Aucun fichier n'est hébergé sur ce serveur.</div>
+        </div>
+        <div class="field">
+          <label for="description">Description courte</label>
+          <textarea id="description" name="description"
+                    placeholder="Résumé en quelques mots du contenu…">{{ ressource.description if ressource else '' }}</textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-p">{{ action }}</button>
+          <a href="{{ url_for('ressources.liste') }}" class="btn">Annuler</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
