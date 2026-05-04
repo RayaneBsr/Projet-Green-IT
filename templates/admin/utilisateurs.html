@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Administration — BiblioLibre{% endblock %}
+{% block content %}
+<div class="wrap">
+  <div class="ph">
+    <h1>Administration — Utilisateurs</h1>
+    <p>{{ users|length }} compte{{ 's' if users|length != 1 }} enregistré{{ 's' if users|length != 1 }}</p>
+  </div>
+
+  <div class="box">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Ressources</th>
+            <th>Inscrit le</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td style="color:var(--light);font-size:.78rem">{{ u.id }}</td>
+            <td><strong>{{ u.prenom }} {{ u.nom }}</strong></td>
+            <td style="font-size:.83rem">{{ u.email }}</td>
+            <td>
+              {% if u.role == 'admin' %}
+              <span class="tag tag-g">admin</span>
+              {% else %}
+              <span class="tag">étudiant</span>
+              {% endif %}
+            </td>
+            <td style="text-align:center">{{ u.nb_ressources }}</td>
+            <td style="font-size:.78rem;color:var(--muted)">{{ u.date_inscription }}</td>
+            <td>
+              <div style="display:flex;gap:.3rem">
+                <a href="{{ url_for('admin.modifier_user', uid=u.id) }}" class="btn btn-sm">Modifier</a>
+                {% if u.id != current_user_id %}
+                <form method="POST" action="{{ url_for('admin.supprimer_user', uid=u.id) }}"
+                      style="display:inline"
+                      onsubmit="return confirm('Supprimer {{ u.prenom }} {{ u.nom }} et toutes ses ressources ?')">
+                  <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
