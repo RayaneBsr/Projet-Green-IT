@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Mon profil — BiblioLibre{% endblock %}
+{% block content %}
+<div class="wrap">
+  <div class="ph">
+    <h1>Mon profil</h1>
+    <p>Gérez vos informations et vos ressources déposées.</p>
+  </div>
+
+  <div class="profil-grid">
+
+    <div>
+      <div class="box" style="margin-bottom:1rem">
+        <div class="box-head">
+          <strong>{{ u.prenom }} {{ u.nom }}</strong>
+          {% if u.role == 'admin' %}
+          <span class="tag tag-g" style="margin-left:.4rem">admin</span>
+          {% endif %}
+          <div style="font-size:.78rem;color:var(--muted);margin-top:.15rem">
+            Inscrit le {{ u.date_inscription }}
+          </div>
+        </div>
+        <div class="box-body">
+          <form method="POST" action="{{ url_for('profil.profil') }}">
+            <div class="field-row">
+              <div class="field">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" required value="{{ u.prenom }}">
+              </div>
+              <div class="field">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" required value="{{ u.nom }}">
+              </div>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required value="{{ u.email }}">
+            </div>
+            <div class="field">
+              <label for="mdp">Nouveau mot de passe</label>
+              <input type="password" id="mdp" name="mdp" minlength="8"
+                     placeholder="Laisser vide pour ne pas changer">
+              <div class="hint">8 caractères minimum.</div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-p">Enregistrer</button>
+            </div>
+          </form>
+
+          <div class="danger-zone">
+            <p>Supprimer votre compte supprimera définitivement toutes vos ressources.</p>
+            <form method="POST" action="{{ url_for('profil.supprimer') }}"
+                  onsubmit="return confirm('Supprimer définitivement votre compte et toutes vos ressources ?')">
+              <button type="submit" class="btn btn-sm btn-danger">Supprimer mon compte</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sh">
+        <h2>Mes ressources ({{ mes_ressources|length }})</h2>
+        <a href="{{ url_for('ressources.creer') }}" class="btn btn-p btn-sm">+ Déposer</a>
+      </div>
+
+      {% if mes_ressources %}
+      <div class="r-list">
+        {% for r in mes_ressources %}
+        <div class="r-item">
+          <div class="r-title">{{ r.titre }}</div>
+          <div class="r-meta" style="margin-top:.25rem">
+            {% if r.matiere_nom %}<span class="tag tag-g">{{ r.matiere_nom }}</span>{% endif %}
+            <span style="font-size:.78rem;color:var(--muted)">{{ r.date_ajout }}</span>
+          </div>
+          <div class="r-actions">
+            <a href="{{ r.lien_url }}" target="_blank" rel="noopener" class="btn btn-sm">↗</a>
+            <a href="{{ url_for('ressources.modifier', rid=r.id) }}" class="btn btn-sm">Modifier</a>
+            <form method="POST" action="{{ url_for('ressources.supprimer', rid=r.id) }}"
+                  style="display:inline"
+                  onsubmit="return confirm('Supprimer ?')">
+              <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty" style="padding:1.5rem">Aucune ressource déposée pour l'instant.</div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
