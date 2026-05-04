@@ -1,0 +1,105 @@
+
+{% extends "base.html" %}
+{% block title %}Ressources — BiblioLibre{% endblock %}
+{% block content %}
+<div class="wrap">
+
+  <div class="ph">
+    <h1>Ressources pédagogiques</h1>
+    <p>{{ total }} ressource{{ 's' if total != 1 }} disponible{{ 's' if total != 1 }}</p>
+  </div>
+
+  <form method="GET" action="{{ url_for('ressources.liste') }}" class="filters">
+    <div class="filter-f" style="flex:2;min-width:180px">
+      <label>Recherche</label>
+      <input type="text" name="q" value="{{ q }}" placeholder="Titre ou description…">
+    </div>
+    <div class="filter-f">
+      <label>Matière</label>
+      <select name="matiere">
+        <option value="">Toutes</option>
+        {% for m in matieres %}
+        <option value="{{ m.id }}" {% if filtre_matiere == m.id|string %}selected{% endif %}>{{ m.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="filter-f">
+      <label>Promotion</label>
+      <select name="promotion">
+        <option value="">Toutes</option>
+        {% for p in promotions %}
+        <option value="{{ p }}" {% if filtre_promo == p %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div style="display:flex;gap:.4rem;align-items:flex-end;flex-shrink:0">
+      <button type="submit" class="btn btn-p btn-sm">Filtrer</button>
+      {% if q or filtre_matiere or filtre_promo %}
+      <a href="{{ url_for('ressources.liste') }}" class="btn btn-sm">Effacer</a>
+      {% endif %}
+    </div>
+  </form>
+
+  {% if current_user_id %}
+  <div style="margin-bottom:.8rem;text-align:right">
+    <a href="{{ url_for('ressources.creer') }}" class="btn btn-p btn-sm">+ Déposer une ressource</a>
+  </div>
+  {% endif %}
+
+  {% if items %}
+  <div class="r-list">
+    {% for r in items %}
+    <div class="r-item">
+      <div class="r-title">{{ r.titre }}</div>
+      {% if r.description %}<div class="r-desc">{{ r.description }}</div>{% endif %}
+      <div class="r-meta" style="margin-top:.3rem">
+        {% if r.matiere_nom %}<span class="tag tag-g">{{ r.matiere_nom }}</span>{% endif %}
+        {% if r.promotion %}<span class="tag">{{ r.promotion }}</span>{% endif %}
+        <span>{{ r.auteur }}</span>
+        <span>{{ r.date_ajout }}</span>
+      </div>
+      <div class="r-actions">
+        <a href="{{ r.lien_url }}" target="_blank" rel="noopener" class="btn btn-sm">Voir le lien ↗</a>
+        {% if current_user_id and (r.utilisateur_id == current_user_id or current_user_role == 'admin') %}
+        <a href="{{ url_for('ressources.modifier', rid=r.id) }}" class="btn btn-sm">Modifier</a>
+        <form method="POST" action="{{ url_for('ressources.supprimer', rid=r.id) }}"
+              style="display:inline"
+              onsubmit="return confirm('Supprimer cette ressource ?')">
+          <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if nb_pages > 1 %}
+  <div class="pag">
+    {% if page > 1 %}
+    <a href="{{ url_for('ressources.liste', page=page-1, matiere=filtre_matiere, promotion=filtre_promo, q=q) }}">←</a>
+    {% else %}<span class="off">←</span>{% endif %}
+
+    {% for p in range(1, nb_pages+1) %}
+      {% if p == page %}<span class="cur">{{ p }}</span>
+      {% elif p == 1 or p == nb_pages or (p >= page-2 and p <= page+2) %}
+      <a href="{{ url_for('ressources.liste', page=p, matiere=filtre_matiere, promotion=filtre_promo, q=q) }}">{{ p }}</a>
+      {% elif p == page-3 or p == page+3 %}<span>…</span>{% endif %}
+    {% endfor %}
+
+    {% if page < nb_pages %}
+    <a href="{{ url_for('ressources.liste', page=page+1, matiere=filtre_matiere, promotion=filtre_promo, q=q) }}">→</a>
+    {% else %}<span class="off">→</span>{% endif %}
+  </div>
+  {% endif %}
+
+  {% else %}
+  <div class="empty">
+    Aucune ressource ne correspond à votre recherche.
+    {% if current_user_id %}
+    <br><a href="{{ url_for('ressources.creer') }}">Déposer la première ressource.</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
