@@ -7,7 +7,7 @@ from app import get_db
 from routes.helpers import login_required, admin_required, hash_mdp
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
-
+##
 
 @bp.route("/utilisateurs")
 @login_required
