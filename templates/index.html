@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}BiblioLibre — Ressources pédagogiques étudiantes{% endblock %}
+{% block title %}BiblioLibre {% endblock %}
 
 {% block content %}
 <div class="wrap">
 
   <div class="hero">
     <h1>Bibliothèque de ressources étudiantes</h1>
-    <p>Fiches de révision, résumés de cours, annales — déposés et partagés par les étudiants, pour les étudiants.</p>
+    <p>Fiches de révision, résumés de cours et annales déposés et partagés par les étudiants, pour les étudiants.</p>
     <div style="display:flex;gap:.6rem;flex-wrap:wrap">
       <a href="{{ url_for('ressources.liste') }}" class="btn btn-p">Parcourir les ressources</a>
       {% if not current_user_id %}
@@ -32,7 +32,7 @@
   </div>
 
   <div class="green-notice">
-    <strong>🌿 Engagements Green IT</strong>
+    <strong>Engagements Green IT</strong>
     <span class="gn-item">Pages &lt; 200 Ko</span>
     <span class="gn-item">Zéro animation</span>
     <span class="gn-item">Zéro autoplay</span>
