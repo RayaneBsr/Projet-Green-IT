@@ -1,52 +1,35 @@
+
 {% extends "base.html" %}
-{% block title %}Inscription — BiblioLibre{% endblock %}
+{% block title %}Connexion - BiblioLibre{% endblock %}
 {% block content %}
 <div class="auth-wrap">
-  <div style="width:100%;max-width:460px">
+  <div style="width:100%;max-width:420px">
     <div style="text-align:center;margin-bottom:1.5rem">
       <a href="{{ url_for('index') }}" style="font-size:1.1rem;font-weight:700;color:var(--accent);text-decoration:none">BiblioLibre</a>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:.2rem">Ressources pédagogiques étudiantes</p>
     </div>
     <div class="box">
-      <div class="box-head"><strong>Créer un compte</strong></div>
+      <div class="box-head"><strong>Connexion</strong></div>
       <div class="box-body">
-        <form method="POST" action="{{ url_for('auth.inscription') }}">
-          <div class="field-row">
-            <div class="field">
-              <label for="prenom">Prénom <span class="required">*</span></label>
-              <input type="text" id="prenom" name="prenom" required autocomplete="given-name"
-                     value="{{ prenom }}" placeholder="Alice">
-            </div>
-            <div class="field">
-              <label for="nom">Nom <span class="required">*</span></label>
-              <input type="text" id="nom" name="nom" required autocomplete="family-name"
-                     value="{{ nom }}" placeholder="Dupont">
-            </div>
+        <form method="POST" action="{{ url_for('auth.connexion') }}">
+          <div class="field">
+            <label for="email">Adresse email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="vous@exemple.com">
           </div>
           <div class="field">
-            <label for="email">Adresse email <span class="required">*</span></label>
-            <input type="email" id="email" name="email" required autocomplete="email"
-                   value="{{ email }}" placeholder="vous@exemple.com">
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="mdp">Mot de passe <span class="required">*</span></label>
-              <input type="password" id="mdp" name="mdp" required minlength="8"
-                     autocomplete="new-password" placeholder="8 caractères min.">
-            </div>
-            <div class="field">
-              <label for="mdp2">Confirmer <span class="required">*</span></label>
-              <input type="password" id="mdp2" name="mdp2" required autocomplete="new-password" placeholder="••••••••">
-            </div>
+            <label for="mdp">Mot de passe</label>
+            <input type="password" id="mdp" name="mdp" required autocomplete="current-password" placeholder="••••••••">
           </div>
           <div class="form-actions">
-            <button type="submit" class="btn btn-p">Créer mon compte</button>
+            <button type="submit" class="btn btn-p">Se connecter</button>
           </div>
         </form>
       </div>
       <div class="box-foot">
-        Déjà inscrit ? <a href="{{ url_for('auth.connexion') }}">Se connecter</a>
+        Pas encore de compte ? <a href="{{ url_for('auth.inscription') }}">S'inscrire</a>
       </div>
     </div>
+
   </div>
 </div>
 {% endblock %}
