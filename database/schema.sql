@@ -1,6 +1,3 @@
--- schema.sql
--- Contributeur : Timothée
-
 CREATE TABLE IF NOT EXISTS utilisateur (
     id               INTEGER PRIMARY KEY AUTOINCREMENT,
     nom              TEXT    NOT NULL,
