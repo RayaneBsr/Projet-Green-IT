@@ -1,7 +1,3 @@
-"""
-routes/auth.py — Authentification (inscription, connexion, déconnexion)
-Contributeur : Enzo
-"""
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app import get_db
 from routes.helpers import hash_mdp, now_str
