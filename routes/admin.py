@@ -1,7 +1,3 @@
-"""
-routes/admin.py — Interface d'administration des utilisateurs
-Contributeur : Rayane
-"""
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app import get_db
 from routes.helpers import login_required, admin_required, hash_mdp
