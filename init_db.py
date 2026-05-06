@@ -1,8 +1,3 @@
-"""
-init_db.py — Initialisation de la base de données
-Contributeur : Timothée
-Usage : python init_db.py
-"""
 import sqlite3
 import hashlib
 import os
@@ -28,16 +23,16 @@ def init_db(db_path=None):
 
     # Matières
     matieres = [
-        ("Mathématiques",        "MATHS"),
-        ("Algorithmique",        "ALGO"),
-        ("Bases de données",     "BDD"),
-        ("Réseaux",              "RESEAU"),
-        ("Signaux & systèmes",   "SIGNAL"),
-        ("Numérique durable",    "TI616"),
-        ("Gestion de projet",    "MGMT"),
-        ("Programmation",        "PROG"),
-        ("Systèmes d'exploitation", "SE"),
-        ("Anglais",              "ANG"),
+        ("Recherche Opérationnelle",   "RO"),
+        ("Cloud Computing",            "CC"),
+        ("Bases de données",           "BDD"),
+        ("VHDL",                       "VHDL"),
+        ("Théorie du signal",          "TDS"),
+        ("Numérique durable",          "ND"),
+        ("Théorie de graphes",         "TDG"),
+        ("Systeme de transimission",   "SDT"),
+        ("Français",                   "FR"),
+        ("Anglais",                    "ANG"),
     ]
     for nom, code in matieres:
         conn.execute(
