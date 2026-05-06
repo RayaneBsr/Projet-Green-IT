@@ -5,7 +5,7 @@ Plateforme collaborative de partage de ressources pédagogiques éco-conçue.
 Projet Numérique Durable
 EFREI Paris 2025/2026.
 
-**URL déployée :** https://bibliolibre.onrender.com **
+**URL déployée :** https://bibliolibre.onrender.com 
 
 ## Équipe
 
