@@ -1,7 +1,3 @@
-"""
-app.py — Point d'entrée principal de BiblioLibre
-Contributeur : Timothée
-"""
 import os
 import sqlite3
 from flask import Flask, g, session, render_template
