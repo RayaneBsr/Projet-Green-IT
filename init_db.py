@@ -54,21 +54,16 @@ def init_db(db_path=None):
     if admin:
         aid = admin["id"]
         demos = [
-            ("Résumé Fourier & Laplace",
-             "Synthèse des transformées pour l'examen final",
-             "https://example.com/fourier", 5, "I3"),
-            ("Annales BD 2024 — corrigées",
-             "Toutes les annales avec solutions détaillées",
-             "https://example.com/bdd", 3, "I2"),
-            ("Fiche mémo Floyd-Warshall",
-             "Algorithme pas à pas avec exemples tracés",
-             "https://example.com/floyd", 2, "I3"),
-            ("Intro aux réseaux — couche OSI",
-             "Cours complet modèle OSI, TCP/IP et routage",
-             "https://example.com/reseaux", 4, "P1"),
-            ("Guide TPs Numérique Durable",
-             "Méthodologie et ressources pour les TPs TI616",
-             "https://example.com/ti616", 6, "I3"),
+            ("Résumé transfomré de Fourier ",
+             "Résumé pour le DE",
+             "https://moodle.myefrei.fr/pluginfile.php/663779/mod_resource/content/2/Chap4-Transformation%20de%20Fourier-ETUDIANTS.pdf", 5, "I1"),
+            ("CM BD SQL ",
+             "",
+             "https://moodle.myefrei.fr/pluginfile.php/588922/mod_resource/content/2/6%20-%20SQL_LDD.pdf", 3, "P2"),
+            ("Annales DE 2025/2026",
+             "",
+             "https://moodle.myefrei.fr/pluginfile.php/669812/mod_resource/content/3/2526-SM601-DE-Solution.pdf", 7, "I1"),
+           
         ]
         for titre, desc, lien, mid, promo in demos:
             conn.execute("""
