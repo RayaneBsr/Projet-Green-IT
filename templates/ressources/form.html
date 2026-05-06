@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% block title %}{{ action }} une ressource — BiblioLibre{% endblock %}
+{% block title %}{{ action }} une ressource - BiblioLibre{% endblock %}
 {% block content %}
 <div class="wrap-sm" style="padding-top:.5rem">
   <div class="ph">
@@ -49,7 +49,7 @@
           <input type="url" id="lien_url" name="lien_url" required
                  value="{{ ressource.lien_url if ressource else '' }}"
                  placeholder="https://…">
-          <div class="hint">Google Doc, Drive, Notion, PDF en ligne… Aucun fichier n'est hébergé sur ce serveur.</div>
+          <div class="hint">Google Doc, Drive, PDF en ligne… Aucun fichier n'est hébergé sur ce serveur.</div>
         </div>
         <div class="field">
           <label for="description">Description courte</label>
