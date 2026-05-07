@@ -91,7 +91,9 @@ bibliolibre/
 │   └── admin/
 │       ├── utilisateurs.html
 │       └── modifier_user.html
-└── docs/                           # Rapport
+└── docs/                           # Rapport et slides
+    ├── rapport.pdf
+    └── slides.pdf
 ```
 
 
